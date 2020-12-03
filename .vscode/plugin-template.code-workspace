@@ -1,0 +1,11 @@
+{
+	"folders": [{
+		"path": ".."
+	}],
+	"settings": {
+		"files.eol": "\n",
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": false,
+		"css.validate": false,
+	},
+}
