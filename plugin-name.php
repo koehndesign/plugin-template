@@ -27,3 +27,5 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
