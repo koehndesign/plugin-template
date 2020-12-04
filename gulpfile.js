@@ -83,24 +83,18 @@ const compose = () => (
   composer('dumpautoload', {optimize: true})
 );
 
-const zipBeta = () => (
+const zipPlugin = () => (
   src(config.glob.zip)
-  .pipe(zip(config.file.zipBeta))
-  .pipe(dest(config.dest.dist))
-);
-
-const zipFinal = () => (
-  src(config.glob.zip)
-  .pipe(zip(config.file.zipFinal))
+  .pipe(zip(config.zipname))
   .pipe(dest(config.dest.dist))
 );
 
 /***********************************************************************
  * Exports
  ***********************************************************************/
-//exports.build = series(cleanDist, parallel(buildCSS, copyStatic));
 
-module.exports = {
-  build: series(compose, cleanDist, parallel(buildCSS, buildJS, copyStatic, copyReadme)),
-  test: copyReadme,
+ module.exports = {
+  build: series(compose, cleanDist, copyStatic, copyReadme, buildJS, buildCSS),
+  zip: zipPlugin,
+  //lint: series(lintCSS, lintJS)
 }

@@ -9,7 +9,7 @@ A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and m
 * nodejs
 
 ## Setup
-* __required__ info in './package.json': __name__, __version__, __description__
+* __required__ info in './package.json': __name__, __version__, __release__, __description__
 * optional info in './package.json': localDevDIR, localDevURL, license, etc...
 * npm run setup
 

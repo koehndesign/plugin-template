@@ -1,6 +1,7 @@
 {
 	"name": "plugin_template",
-	"version": "0.0.0",
+  "version": "0.0.0",
+  "release": "alpha",
 	"description": "",
 	"private": true,
 	"localDevDIR": "C:/Users/kdcadmin/Local Sites/test/app/public/wp-content/plugins",
@@ -9,7 +10,7 @@
 		"setup": "gulp setup",
 		"lint": "gulp lint",
 		"fix": "gulp fix",
-		"dev": "cross-env NODE_ENV=development gulp dev",
+		"dev": "cross-env NODE_ENV=development gulp build",
 		"build": "cross-env NODE_ENV=production gulp build"
 	},
 	"author": "Example Author",

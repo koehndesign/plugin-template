@@ -1,10 +1,28 @@
 const package = require('./package.json');
 const time = Date.now();
 const dest = '.dist';
+const zip = (release) => {
+  switch (release) {
+    case 'alpha':
+      return `${package.name}-${package.version}-ALPHA-${time}.zip`;
+      break;
+    case 'beta':
+      return `${package.name}-${package.version}-BETA-${time}.zip`;
+      break;
+    case 'rc':
+      return `${package.name}-${package.version}-RC-${time}.zip`;
+      break;
+    case 'stable':
+      return `${package.name}-${package.version}-STABLE.zip`;
+      break;
+    default:
+      return 'plugin.zip';
+  }
+}
 
 module.exports = {
   glob: {
-    static: ['./**/*', '!./{node_modules,scripts,styles}/**', '!./*.*', './{changelog.md,*.php}'],
+    static: ['./**/*', '!./{node_modules,scripts,styles}/**', '!./*.*', './{changelog.md,LICENSE,*.php}'],
     css: {
       all: './styles/**/*.+(css|pcss)',
       entry: './styles/index/**/*.pcss',
@@ -21,9 +39,5 @@ module.exports = {
     scripts: `./dist/${package.name}/scripts`,
     styles: `./dist/${package.name}/styles`,
   },
-  file: {
-    zipBeta: `${package.name}-${package.version}BETA-${time}.zip`,
-    zipRC: `${package.name}-${package.version}RC-${time}.zip`,
-    zipFinal: `${package.name}-${package.version}.zip`,
-  },
+  zipname: zip(package.release),
 }
