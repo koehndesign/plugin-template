@@ -2,9 +2,7 @@
  * Dependencies
  ***********************************************************************/
 
-const package = require('./package.json');
 const config = require('./config.js')
-const time = Date.now();
 const {
   src,
   dest,
@@ -18,18 +16,19 @@ const rename = require('gulp-rename');
 const stylelint = require('stylelint');
 const named = require('vinyl-named');
 const webpack = require('webpack-stream');
+const composer = require('gulp-composer');
 const zip = require('gulp-zip');
 
 /***********************************************************************
  * Functions
  ***********************************************************************/
 
-const lintCSS = (fix) => (
+const lintCSS = () => (
   stylelint
   .lint({
-    files: config.globs.css.all,
+    files: config.glob.css.all,
     formatter: "verbose",
-    fix: fix,
+    fix: true,
   })
   .then(function ({
     output,
@@ -44,7 +43,7 @@ const lintCSS = (fix) => (
 );
 
 const cleanDist = () => (
-  src('./dist', {
+  src(config.dest.dist, {
     read: false,
     allowEmpty: true
   })
@@ -52,36 +51,48 @@ const cleanDist = () => (
 );
 
 const buildCSS = () => (
-  src(config.globs.css.entry)
+  src(config.glob.css.entry)
   .pipe(postcss())
   .pipe(rename({
     extname: '.css'
   }))
-  .pipe(dest(`./dist/${package.name}/styles`))
+  .pipe(dest(config.dest.styles))
 );
 
 const buildJS = () => (
-  src(config.globs.js.entry)
+  src(config.glob.js.entry)
   .pipe(named())
   .pipe(webpack(require('./webpack.config.js')))
-  .pipe(dest(`./dist/${package.name}/scripts`))
+  .pipe(dest(config.dest.scripts))
 );
 
 const copyStatic = () => (
-  src(['./src/static/**'])
-  .pipe(dest(`./dist/${package.name}`))
+  src(config.glob.static)
+  .pipe(dest(config.dest.plugin))
+);
+
+const copyReadme = () => (
+  src(['./plugin.md'])
+  .pipe(rename({
+    basename: 'readme'
+  }))
+  .pipe(dest(config.dest.plugin))
+);
+
+const compose = () => (
+  composer('dumpautoload', {optimize: true})
 );
 
 const zipBeta = () => (
-  src(`./dist/${package.name}/**`)
-  .pipe(zip(`${package.name}-${package.version}-beta-${time}.zip`))
-  .pipe(dest('./dist'))
+  src(config.glob.zip)
+  .pipe(zip(config.file.zipBeta))
+  .pipe(dest(config.dest.dist))
 );
 
 const zipFinal = () => (
-  src(`./dist/${package.name}/**`)
-  .pipe(zip(`${package.name}-${package.version}.zip`))
-  .pipe(dest('./dist'))
+  src(config.glob.zip)
+  .pipe(zip(config.file.zipFinal))
+  .pipe(dest(config.dest.dist))
 );
 
 /***********************************************************************
@@ -90,6 +101,6 @@ const zipFinal = () => (
 //exports.build = series(cleanDist, parallel(buildCSS, copyStatic));
 
 module.exports = {
-  build: series(cleanDist, parallel(buildCSS, buildJS, copyStatic)),
-  test: lintCSS,
+  build: series(compose, cleanDist, parallel(buildCSS, buildJS, copyStatic, copyReadme)),
+  test: copyReadme,
 }
