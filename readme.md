@@ -2,8 +2,8 @@
 A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and more. Powered by Gulp/Webpack/Composer.
 
 ## Prerequisites
-* vscode
-	* use workspace file in project root (rename first if desired)
+* PHP 7.4.0+
+* vscode extensions
 	* [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 	* [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
 	* [ESlint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
@@ -11,6 +11,7 @@ A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and m
 * nodejs
 
 ## Setup
+* use vscode workspace file in project root (rename first if desired)
 * __required__ info in package.json: __name__, __version__, __release__, __description__
 * npm run setup
 

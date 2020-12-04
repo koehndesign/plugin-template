@@ -13,7 +13,6 @@ const clean = require('gulp-clean');
 const postcss = require('gulp-postcss');
 const replace = require('gulp-async-replace');
 const rename = require('gulp-rename');
-const stylelint = require('stylelint');
 const named = require('vinyl-named');
 const webpack = require('webpack-stream');
 const composer = require('gulp-composer');
@@ -24,7 +23,7 @@ const zip = require('gulp-zip');
  ***********************************************************************/
 
 const lintCSS = () => (
-  require('gulp-rename').lint({
+  require('stylelint').lint({
     files: config.glob.css.all,
     formatter: "verbose",
     fix: true,
@@ -95,7 +94,7 @@ const zipPlugin = () => (
  ***********************************************************************/
 
 module.exports = {
-  //lint: series(lintCSS, lintJS)
+  lint: series(lintCSS),
   build: series(compose, cleanDist, copyStatic, copyReadme, buildJS, buildCSS),
   release: series(compose, cleanDist, copyStatic, copyReadme, buildJS, buildCSS, zipPlugin),
 }

@@ -31,20 +31,11 @@ if (!defined('WPINC')) {
 	die;
 }
 
-const ROOT_DIR = plugin_dir_path(__FILE__);
-const ROOT_URL = plugin_dir_url(__FILE__);
-
 // Autoloader.
-if (is_readable(ROOT_DIR . 'vendor/autoload.php')) {
-	require ROOT_DIR . 'vendor/autoload.php';
+if (is_readable(plugin_dir_path(__FILE__) . 'vendor/autoload.php')) {
+	require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 }
 
-register_activation_hook(__FILE__, function () {
-	Setup::activate();
-});
+$app = new App();
 
-register_deactivation_hook(__FILE__, function () {
-	Setup::deactivate();
-});
-
-Setup::hooks();
+$app->setup(__FILE__);
