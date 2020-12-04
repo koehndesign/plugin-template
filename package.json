@@ -11,7 +11,8 @@
 		"lint": "gulp lint",
 		"fix": "gulp fix",
 		"dev": "cross-env NODE_ENV=development gulp build",
-		"build": "cross-env NODE_ENV=production gulp build"
+    "build": "cross-env NODE_ENV=production gulp build",
+    "release": "cross-env NODE_ENV=production gulp release"
 	},
 	"author": "Example Author",
 	"authorURL": "https://www.example.com",

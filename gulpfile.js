@@ -24,8 +24,7 @@ const zip = require('gulp-zip');
  ***********************************************************************/
 
 const lintCSS = () => (
-  stylelint
-  .lint({
+  require('gulp-rename').lint({
     files: config.glob.css.all,
     formatter: "verbose",
     fix: true,
@@ -80,7 +79,9 @@ const copyReadme = () => (
 );
 
 const compose = () => (
-  composer('dumpautoload', {optimize: true})
+  composer('dumpautoload', {
+    optimize: true
+  })
 );
 
 const zipPlugin = () => (
@@ -93,8 +94,8 @@ const zipPlugin = () => (
  * Exports
  ***********************************************************************/
 
- module.exports = {
-  build: series(compose, cleanDist, copyStatic, copyReadme, buildJS, buildCSS),
-  zip: zipPlugin,
+module.exports = {
   //lint: series(lintCSS, lintJS)
+  build: series(compose, cleanDist, copyStatic, copyReadme, buildJS, buildCSS),
+  release: series(compose, cleanDist, copyStatic, copyReadme, buildJS, buildCSS, zipPlugin),
 }

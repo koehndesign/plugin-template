@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The plugin bootstrap file
  *
@@ -24,8 +25,26 @@
  * Domain Path:       /languages
  */
 
-if ( ! defined( 'WPINC' ) ) {
+namespace App;
+
+if (!defined('WPINC')) {
 	die;
 }
 
-require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+const ROOT_DIR = plugin_dir_path(__FILE__);
+const ROOT_URL = plugin_dir_url(__FILE__);
+
+// Autoloader.
+if (is_readable(ROOT_DIR . 'vendor/autoload.php')) {
+	require ROOT_DIR . 'vendor/autoload.php';
+}
+
+register_activation_hook(__FILE__, function () {
+	Setup::activate();
+});
+
+register_deactivation_hook(__FILE__, function () {
+	Setup::deactivate();
+});
+
+Setup::hooks();
