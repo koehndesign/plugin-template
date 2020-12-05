@@ -8,5 +8,8 @@
     "platform": {
       "php": "7.4.0"
     }
+  },
+  "require": {
+    "rdlowrey/auryn": "^1.4"
   }
 }

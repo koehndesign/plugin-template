@@ -2,27 +2,40 @@
 
 namespace App;
 
+use Auryn\Injector;
+
 class App
 {
-	protected string $rootDir;
-	protected string $rootUrl;
-	protected string $mainFile;
-	protected string $version;
+	private Injector $injector;
+	private array $config;
 
-	public function setup($file)
+	public function __construct($file)
 	{
-		$this->rootDir = plugin_dir_path($file);
-		$this->rootUrl = plugin_dir_url($file);
+		$this->injector = new Injector;
 		$this->mainFile = $file;
-		$this->version = '';
-
-		register_activation_hook($this->mainFile, [$this, 'activate']);
-		register_deactivation_hook($this->mainFile, [$this, 'deactivate']);
-
-		add_action('wp_enqueue_scripts', function () {
-			wp_enqueue_style('plugin-template-css', $this->rootUrl . 'styles/public.css');
-		});
+		$this->config = [
+			'file' => $file,
+			'url' => plugin_dir_url($file),
+			'dir' => plugin_dir_path($file),
+			'ver' => '0.0.0',
+		];
+		$this->injector->defineParam('config', $this->config);
+		$this->registerServiceProviders();
 	}
+
+	private array $providers = [
+		ServiceProviders\AdminServiceProvider::class,
+		ServiceProviders\AssetsServiceProvider::class,
+		ServiceProviders\ShortcodesServiceProvider::class,
+	];
+
+	private function registerServiceProviders()
+	{
+		foreach ($this->providers as $provider) {
+			$this->injector->make($provider);
+		}
+	}
+
 	public function activate()
 	{
 		// Add activation code here.

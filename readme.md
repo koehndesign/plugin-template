@@ -3,12 +3,14 @@ A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and m
 
 ## Prerequisites
 * PHP 7.4.0+
+* nodejs
+* composer
+* vscode
 * vscode extensions
 	* [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 	* [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
 	* [ESlint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 	* [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-* nodejs
 
 ## Setup
 * use vscode workspace file in project root (rename first if desired)
@@ -18,7 +20,7 @@ A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and m
 ## What Goes Where?
 * all JS files in './scripts/index' will be used as entry points for Webpack
 * all PCSS files in './styles/index' will be used as entry points for PostCSS
-* all PHP files in './src' are autoloaded via composer(PSR-4) as defined in composer.json
+* all PHP files in './app' are autoloaded via composer(PSR-4) as defined in composer.json
 
 ## Browsersync
 TODO: [example](https://github.com/gulpjs/gulp/blob/master/docs/recipes/minimal-browsersync-setup-with-gulp4.md)
@@ -29,7 +31,7 @@ TODO: [example](https://github.com/gulpjs/gulp/blob/master/docs/recipes/minimal-
 * set __release__ lifecycle status in package.json
 * npm run release
 
-## Lint
+## Linting
 * CSS working
 TODO: [phplint](https://www.npmjs.com/package/phplint)
 TODO: [eslint](https://eslint.org/docs/developer-guide/nodejs-api)

@@ -31,11 +31,9 @@ if (!defined('WPINC')) {
 	die;
 }
 
-// Autoloader.
-if (is_readable(plugin_dir_path(__FILE__) . 'vendor/autoload.php')) {
-	require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
-}
+require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
-$app = new App();
+$app = new App(__FILE__);
 
-$app->setup(__FILE__);
+register_activation_hook(__FILE__, [$app, 'activate']);
+register_deactivation_hook(__FILE__, [$app, 'deactivate']);
