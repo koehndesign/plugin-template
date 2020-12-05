@@ -1,7 +1,7 @@
 const package = require('./package.json');
 const time = Date.now();
 const dest = '.dist';
-const zip = (release) => {
+const zipName = (release) => {
   switch (release) {
     case 'alpha':
       return `${package.name}-${package.version}-ALPHA-${time}.zip`;
@@ -31,7 +31,7 @@ module.exports = {
       all: './scripts/**/*.js',
       entry: './scripts/index/**/*.js',
     },
-    zip: `./dist/${package.name}/**`,
+    zip: `./dist/**`,
   },
   dest: {
     dist: './dist',
@@ -39,5 +39,5 @@ module.exports = {
     scripts: `./dist/${package.name}/scripts`,
     styles: `./dist/${package.name}/styles`,
   },
-  zipname: zip(package.release),
+  zipname: zipName(package.release),
 }
