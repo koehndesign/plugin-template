@@ -1,19 +1,20 @@
 const package = require('./package.json');
-const time = Date.now();
+const time = Math.floor(Date.now() / 1000);
 const dest = '.dist';
 const zipName = (release) => {
+  const prefix = `${package.name}-${package.version}`;
   switch (release) {
     case 'alpha':
-      return `${package.name}-${package.version}-ALPHA-${time}.zip`;
+      return `${prefix}-ALPHA-${time}.zip`;
       break;
     case 'beta':
-      return `${package.name}-${package.version}-BETA-${time}.zip`;
+      return `${prefix}-BETA-${time}.zip`;
       break;
     case 'rc':
-      return `${package.name}-${package.version}-RC-${time}.zip`;
+      return `${prefix}-RC-${time}.zip`;
       break;
     case 'stable':
-      return `${package.name}-${package.version}-STABLE.zip`;
+      return `${prefix}-STABLE.zip`;
       break;
     default:
       return 'plugin.zip';
@@ -41,3 +42,7 @@ module.exports = {
   },
   zipname: zipName(package.release),
 }
+const now = Date.now();
+const short = Math.floor(Date.now() / 1000);
+console.log(zipName('alpha'));
+

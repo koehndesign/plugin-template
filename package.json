@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "release": "alpha",
 	"description": "",
-	"private": true,
-	"localDevDIR": "C:/Users/kdcadmin/Local Sites/test/app/public/wp-content/plugins",
+  "private": true,
+  "buildToLocal": true,
+	"localDevDIR": "C:/Users/kdcadmin/Local Sites/test/app/public/wp-content/plugins/",
 	"localDevURL": "https://test.local",
 	"scripts": {
 		"setup": "gulp setup",
