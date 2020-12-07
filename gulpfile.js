@@ -4,9 +4,11 @@
 const {
   src,
   dest,
+  watch,
   series,
   parallel
 } = require('gulp');
+const merge = require('merge-stream');
 const clean = require('gulp-clean');
 const postcss = require('gulp-postcss');
 const replace = require('gulp-async-replace');
@@ -15,6 +17,7 @@ const named = require('vinyl-named');
 const webpack = require('webpack-stream');
 const composer = require('gulp-composer');
 const zip = require('gulp-zip');
+const browser = require('browser-sync');
 
 /***********************************************************************
  * Config
@@ -33,7 +36,9 @@ const zipname = () => {
 }
 // Glob definitions.
 const globs = {
-  static: ['./**/*', '!./{node_modules,scripts,styles}/**', '!./*.*', './{changelog.md,LICENSE,*.php}'],
+  static: {
+    all: ['./**/*', '!./{node_modules,scripts,styles}/**', '!./*.*', './{changelog.md,LICENSE,*.php}'],
+  },
   css: {
     all: './styles/**/*.+(css|pcss)',
     entry: './styles/index/**/*.pcss',
@@ -104,15 +109,13 @@ function dumpAutoload() {
 }
 
 function copyStatic() {
-  return src(globs.static)
-    .pipe(dest(buildDir.root))
-}
-
-function copyReadme() {
-  return src(['./plugin.md'])
-    .pipe(rename({
-      basename: 'readme'
-    }))
+  return merge(
+      src(globs.static.all),
+      src(['./plugin.md'])
+      .pipe(rename({
+        basename: 'readme'
+      }))
+    )
     .pipe(dest(buildDir.root))
 }
 
@@ -138,11 +141,19 @@ function zipPlugin() {
     .pipe(dest('./dist'))
 }
 
+function watchAll() {
+  watch(globs.static.all, copyStatic);
+  watch(globs.js.all, buildJS);
+  watch(globs.css.all, buildCSS);
+  console.log('watching all project files...');
+}
+
 /***********************************************************************
  * Gulp Exports
  ***********************************************************************/
 module.exports = {
   lint: lintCSS,
-  build: series(cleanDist, dumpAutoload, copyStatic, copyReadme, buildJS, buildCSS),
-  release: series(lintCSS, forceProjectDir, cleanDist, dumpAutoload, copyStatic, copyReadme, buildJS, buildCSS, zipPlugin),
+  dev: watchAll,
+  build: series(cleanDist, dumpAutoload, copyStatic, buildJS, buildCSS),
+  release: series(lintCSS, forceProjectDir, cleanDist, dumpAutoload, copyStatic, buildJS, buildCSS, zipPlugin),
 }
