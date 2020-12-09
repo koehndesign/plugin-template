@@ -87,9 +87,9 @@ async function lintCSS() {
   }
 }
 
-function forceProjectDir(cb) {
+function forceProjectDir(done) {
   buildDir = project;
-  cb();
+  done();
 }
 
 function cleanDist() {
@@ -142,9 +142,9 @@ function zipPlugin() {
 }
 
 function watchAll() {
-  watch(globs.static.all, copyStatic);
-  watch(globs.js.all, buildJS);
-  watch(globs.css.all, buildCSS);
+  watch(globs.static.all, series(dumpAutoload, copyStatic));
+  watch(globs.js.all, series(buildJS));
+  watch(globs.css.all, series(buildCSS));
   console.log('watching all project files...');
 }
 
@@ -153,7 +153,7 @@ function watchAll() {
  ***********************************************************************/
 module.exports = {
   lint: lintCSS,
-  dev: watchAll,
+  dev: series(cleanDist, dumpAutoload, copyStatic, buildJS, buildCSS, watchAll),
   build: series(cleanDist, dumpAutoload, copyStatic, buildJS, buildCSS),
   release: series(lintCSS, forceProjectDir, cleanDist, dumpAutoload, copyStatic, buildJS, buildCSS, zipPlugin),
 }
