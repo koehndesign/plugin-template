@@ -1,2 +1,1 @@
-let data = 'test';
-console.log(data);
+// Admin javascript here.

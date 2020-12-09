@@ -15,6 +15,8 @@ class Config
 	protected string $restNonce;
 	protected WP_User $user;
 
+	protected array $wpData;
+
 	public function __construct(string $file)
 	{
 		$this->file = $file;
@@ -30,6 +32,18 @@ class Config
 		$this->restURL = esc_url_raw(get_rest_url());
 		$this->restNonce = wp_create_nonce('wp_rest');
 		$this->user = wp_get_current_user();
+
+		$this->wpData = [
+			'user' => [
+				'id' => $this->user->data->ID,
+				'name' => $this->user->data->display_name,
+				'caps' => $this->user->caps,
+			],
+			'rest' => [
+				'url' => $this->restURL,
+				'nonce' => $this->restNonce,
+			],
+		];
 	}
 
 	public function __get($field)
