@@ -3,8 +3,8 @@
 	"version": "0.0.0",
 	"release": "alpha",
 	"description": "",
-  "private": true,
-  "reloadLocal": true,
+	"private": true,
+	"reloadLocal": true,
 	"buildToLocal": true,
 	"localDevDIR": "C:/Users/kdcadmin/Local Sites/test/app/public/wp-content/plugins/",
 	"localDevURL": "https://test.local",
@@ -43,6 +43,7 @@
 		"webpack-stream": "^6.1.1"
 	},
 	"dependencies": {
+		"@wordpress/api-fetch": "^3.20.0",
 		"tailwindcss": "^2.0.1"
 	}
 }
