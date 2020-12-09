@@ -18,23 +18,23 @@ Very much a work in progress, [discussion](https://github.com/koehndesign/plugin
 * __required__ info in package.json: __name__, __version__, __release__, __description__
 * npm run setup
 
-## What Goes Where?
+# What Goes Where?
 * all JS files in './scripts/index' will be used as entry points for Webpack
 * all PCSS files in './styles/index' will be used as entry points for PostCSS
 * all PHP files in './app' are autoloaded via composer(PSR-4) as defined in composer.json
 * Svelte (.svelte) files will be compiled and bundled with webpack
 
-## Develop (watch)
+# Develop (watch)
 * npm run dev
 
-## Build
+# Build
 * npm run build
 
-## Release
+# Release
 * remember to set __release__ lifecycle status in package.json
 * npm run release
 
-## Lint (wip)
+# Lint (wip)
 * CSS lint/fix working 
 TODO: [phplint](https://www.npmjs.com/package/phplint)
 TODO: [eslint](https://eslint.org/docs/developer-guide/nodejs-api)
