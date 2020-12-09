@@ -1,5 +1,6 @@
 ## Description
-A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and more. Powered by Gulp/Webpack/Composer.
+A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind. Built with Gulp/Webpack/Composer.
+Very much a work in progress, [discussion](https://github.com/koehndesign/plugin-template/discussions)/[issues](https://github.com/koehndesign/plugin-template/issues)/[pull requests](https://github.com/koehndesign/plugin-template/pulls) are welcome!
 
 ## Prerequisites
 * PHP 7.4.0+
@@ -21,17 +22,19 @@ A highly opinionated WordPress plugin template. Svelte, PostCSS, Tailwind, and m
 * all JS files in './scripts/index' will be used as entry points for Webpack
 * all PCSS files in './styles/index' will be used as entry points for PostCSS
 * all PHP files in './app' are autoloaded via composer(PSR-4) as defined in composer.json
+* Svelte (.svelte) files will be compiled and bundled with webpack
 
-## Browsersync
-TODO: [example](https://github.com/gulpjs/gulp/blob/master/docs/recipes/minimal-browsersync-setup-with-gulp4.md)
-* set __localDevDir__ and __localDevURL__ in package.json to your local WordPress dev site
-* npm run watch
+## Develop (watch)
+* npm run dev
+
+## Build
+* npm run build
 
 ## Release
-* set __release__ lifecycle status in package.json
+* remember to set __release__ lifecycle status in package.json
 * npm run release
 
-## Linting
-* CSS working
+## Lint (wip)
+* CSS lint/fix working 
 TODO: [phplint](https://www.npmjs.com/package/phplint)
 TODO: [eslint](https://eslint.org/docs/developer-guide/nodejs-api)
