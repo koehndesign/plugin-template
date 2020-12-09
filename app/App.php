@@ -2,40 +2,41 @@
 
 namespace App;
 
-use Auryn\Injector;
-
 class App
 {
-	private Injector $injector;
+	private string $file;
 	private Config $config;
-
-	public function __construct($file)
-	{
-		$this->injector = new Injector;
-		$this->config = new Config($file,'{version}');
-		$this->injector->share($this->config);
-		$this->registerServiceProviders();
-	}
-
+	private array $container = [];
 	private array $providers = [
 		ServiceProviders\AdminServiceProvider::class,
 		ServiceProviders\AssetsServiceProvider::class,
 		ServiceProviders\ShortcodesServiceProvider::class,
 	];
 
-	private function registerServiceProviders()
+	public function __construct(string $file)
 	{
-		foreach ($this->providers as $provider) {
-			$this->injector->make($provider);
-		}
+		$whoops = new \Whoops\Run;
+		$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+		$whoops->register();
+		$this->file = $file;
+		add_action('init', [$this, 'appInit'], 0);
 	}
 
-	public function activate()
+	public function appInit()
 	{
-		// Add activation code here.
+		$this->config = new Config($this->file);
+		do_action('qm/debug', $this->config);
+		$this->registerProviders();
+		do_action('qm/debug', $this->container);
 	}
-	public function deactivate()
+
+	private function registerProviders()
 	{
-		// Add deactivation code here.
+		foreach ($this->providers as $provider) {
+			$instance = new $provider;
+			$instance->setup($this->config);
+			$instance->run();
+			$this->container[$provider] = $instance;
+		}
 	}
 }

@@ -10,6 +10,6 @@
     }
   },
   "require": {
-    "rdlowrey/auryn": "^1.4"
+    "filp/whoops": "^2.9"
   }
 }

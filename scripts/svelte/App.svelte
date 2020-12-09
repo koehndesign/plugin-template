@@ -1,17 +1,28 @@
 <script>
-	export let name;
+	export let user, name;
 
-	function toggleName() {
-	  if (name === 'world') {
-		name = 'svelte'
-	  } else {
-		name = 'world'
-	  }
+	if (!user.id) {
+		name = "guest";
+	} else {
+		name = user.name;
 	}
-  </script>
+	function toggleName() {
+		if (name === user.name) {
+			name = ", welcome to the svelte";
+		} else {
+			name = user.name;
+		}
+	}
+</script>
 
-  <main>
+<main>
 	<h1>Hello {name}!</h1>
-	<button on:click={toggleName}>Toggle name</button>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-  </main>
+	{#if user.caps.administrator}
+		<button class="container" on:click={toggleName}>Toggle name</button>
+	{/if}
+	<p>
+		Visit the
+		<a href="https://svelte.dev/tutorial">Svelte tutorial</a>
+		to learn how to build Svelte apps.
+	</p>
+</main>

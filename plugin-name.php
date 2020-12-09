@@ -33,7 +33,5 @@ if (!defined('WPINC')) {
 
 require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
-$app = new App(__FILE__);
+new App(__FILE__);
 
-register_activation_hook(__FILE__, [$app, 'activate']);
-register_deactivation_hook(__FILE__, [$app, 'deactivate']);

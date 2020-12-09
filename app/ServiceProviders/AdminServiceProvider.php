@@ -2,6 +2,9 @@
 
 namespace App\ServiceProviders;
 
-class AdminServiceProvider {
-	// I'm doing nothing here yet.
+class AdminServiceProvider extends AbstractServiceProvider {
+	public function run()
+	{
+
+	}
 }
