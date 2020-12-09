@@ -44,7 +44,7 @@ const globs = {
     entry: './styles/index/**/*.pcss',
   },
   js: {
-    all: './scripts/**/*.js',
+    all: './scripts/**/*.+(js|jsx|svelte)',
     entry: './scripts/index/**/*.js',
   },
   zip: `./dist/**`,
