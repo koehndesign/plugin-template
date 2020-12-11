@@ -31,6 +31,10 @@ if (!defined('WPINC')) {
 	die;
 }
 
+if (version_compare(PHP_VERSION, '7.4', '<')) {
+	die(sprintf('Agency Base requires PHP 7.4 or higher, your current PHP version is: %s.', PHP_VERSION));
+}
+
 require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
 new App(__FILE__);
